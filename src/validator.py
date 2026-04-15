@@ -1,8 +1,13 @@
+import re
+
 def is_strong_password(password: str) -> bool:
-    if len(password) < 8:
-        return False
-    if not any(c.isupper() for c in password):
-        return False
-    if not any(c.islower() for c in password):
-        return False
-    return True
+    rules = [
+        len(password) >= 8,
+        any(c.isupper() for c in password),
+        any(c.islower() for c in password),
+        any(c.isdigit() for c in password),
+        bool(re.search(r"[!@#$%^&*]", password)),
+        " " not in password
+    ]
+    
+    return all(rules)
